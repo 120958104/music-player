@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>music player</title>
+  </head>
+  <body>
+	<div id="list"></div>
+    <input type=text></input>
+	<button onclick="submit()">submit</button>
+    <script>
+		var arr = document.cookie.substring(2).split(",");
+		if(arr[0] === ""){
+			arr.splice(0, 1);
+		}
+		arr.forEach(function(str, index){
+			var p = document.createElement("p");
+			p.textContent = str;
+			p.class = index.toString();
+			document.getElementById("list").appendChild(p);
+			var button = document.createElement("button");
+			button.textContent = "delete";
+			button.onclick = function(){
+				del(index);	
+			}
+			document.getElementById("list").appendChild(button);
+		})
+
+		function submit(){
+			arr.push(document.querySelector("input").value);
+			document.cookie=`a:${arr.toString()};`;
+		}
+		function del(index){
+			document.getElementsByClassName(index).forEach(function(el){
+				document.getElementById("list").removeChild(el);
+			})
+			arr.splice(index, 1);
+			document.cookie=`a:${arr.toString()};`;
+		}
+	</script>
+  </body>
+</html>
